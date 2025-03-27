@@ -1,11 +1,19 @@
 import http from 'http';
 import { URL } from 'url';
-import { ArticleEntity } from './article/article.entity.js';
+import { ArticleEntity } from './article/article.entity';
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
 
-const articles = new ArticleEntity();
+dotenv.config();
+
+export const pool = new Pool({
+  connectionString: `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@localhost:5432/${process.env.POSTGRES_DB}`,
+});
+
+const articles = new ArticleEntity(pool);
 
 http
-  .createServer((req, res) => {
+  .createServer(async (req, res) => {
     if (!req.url) return;
 
     const url = new URL(req.url, `http://${req.headers.host}`);
@@ -15,7 +23,7 @@ http
       const tags = url.searchParams.getAll('tag');
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(articles.getArticles(tags)));
+      res.end(JSON.stringify(await articles.getArticles(tags)));
 
       return;
     }
@@ -39,8 +47,8 @@ http
     if (url.pathname === '/articles' && method === 'POST') {
       let body = '';
       req.on('data', (chunk) => (body += chunk));
-      req.on('end', () => {
-        const article = articles.addArticle(JSON.parse(body));
+      req.on('end', async () => {
+        const article = await articles.addArticle(JSON.parse(body));
         res.writeHead(201, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(article));
       });
