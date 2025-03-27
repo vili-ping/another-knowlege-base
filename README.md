@@ -25,8 +25,8 @@
 
 ```json
 {
-  id: uuid
-  email: email
+  "id": "uuid"
+  "email": "email"
 }
 ```
 
@@ -34,11 +34,11 @@
 
 ```json
 {
-  id: uuid
-  name: string
-  content: string
-  is_public: boolean
-  tags: Tags[]
+  "id": "uuid"
+  "name": "string"
+  "content": "string"
+  "is_public": "boolean"
+  "tags": "Tags[]"
 }
 ```
 
@@ -46,8 +46,8 @@
 
 ```json
 {
-  id: uuid
-  name: string
+  "id": "uuid"
+  "name": "string"
 }
 ```
 
