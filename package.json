@@ -2,15 +2,15 @@
   "name": "another-knowlege-base",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon --ext ts --exec 'node --loader ts-node/esm ./src/index.ts'"
+    "dev": "nodemon --ext ts --exec 'ts-node ./src/index.ts'"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
     "@types/node": "^22.13.13",
+    "@types/pg": "^8.11.11",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
     "eslint": "^9.23.0",
@@ -20,5 +20,9 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "pg": "^8.14.1"
   }
 }
